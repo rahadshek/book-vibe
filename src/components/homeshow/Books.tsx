@@ -1,6 +1,7 @@
 
 import React from 'react';
 import BookCard from '../shear/BookCard';
+import { IBook } from '@/types/books.type';
 
 const getBookData = async () => {
   const res = await fetch('http://localhost:3000/booksData.json');
@@ -18,7 +19,7 @@ const Books = async () => {
       </h2>
 
       <div className="grid grid-cols-1 gap-7 py-7 sm:grid-cols-2 lg:grid-cols-3">
-        {books.map((book) => (
+        {books.map((book:IBook) => (
           <BookCard key={book.bookId} book={book} />
         ))}
       </div>

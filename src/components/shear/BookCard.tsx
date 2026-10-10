@@ -1,8 +1,13 @@
 import React from 'react';
 import Image from 'next/image';
 import { FaRegStar } from 'react-icons/fa';
+import { IBook } from '@/types/books.type';
 
-const BookCard = ({ book }) => {
+interface IBookPromis {
+    book:IBook
+}
+
+const BookCard = ({ book }:IBookPromis) => {
     const { bookName, author, image, rating, tags } = book;
 
     return (
