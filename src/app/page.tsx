@@ -1,6 +1,6 @@
 import Banner from '@/components/homeshow/Banner';
-import Books from '@/components/homeshow/Books';
 import React, { Suspense } from 'react';
+import Books from './books/page';
 
 const page = () => {
   return (

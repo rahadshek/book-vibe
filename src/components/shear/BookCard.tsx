@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import { FaRegStar } from 'react-icons/fa';
 import { IBook } from '@/types/books.type';
+import Link from 'next/link';
 
 interface IBookPromis {
     book:IBook
@@ -58,6 +59,14 @@ const BookCard = ({ book }:IBookPromis) => {
                     <FaRegStar className="text-amber-500" />
                 </span>
             </div>
+
+            
+<Link
+  href={`/books/${book.bookId}`}
+  className="mt-5 flex w-full items-center justify-center rounded-full bg-black px-5 py-3 font-semibold text-white transition-all duration-300 hover:bg-black hover:shadow-md active:scale-95"
+>
+  View Details →
+</Link>
 
         </div>
     );

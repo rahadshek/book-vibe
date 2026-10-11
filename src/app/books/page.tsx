@@ -1,12 +1,13 @@
 
 import React from 'react';
-import BookCard from '../shear/BookCard';
+
 import { IBook } from '@/types/books.type';
+import BookCard from '@/components/shear/BookCard';
 
 const getBookData = async () => {
   const res = await fetch('http://localhost:3000/booksData.json');
-  const books = await res.json();
-  return books;
+  const data = await res.json();
+  return data;
 };
 
 const Books = async () => {
