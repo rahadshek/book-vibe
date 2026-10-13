@@ -1,3 +1,5 @@
+import ReadButtun from "@/components/booksDetails/ReadButtun";
+import WishlistButtun from "@/components/booksDetails/WishlistButtun";
 import { IBook } from "@/types/books.type";
 import Image from "next/image";
 
@@ -5,7 +7,7 @@ interface IBookPromis {
   params: Promise<{ bookId: string }>;
 }
 
-const getBookData = async (): Promise<IBook[]> => {
+const getBookData = async () => {
   const res = await fetch("http://localhost:3000/booksData.json");
 
   if (!res.ok) {
@@ -20,8 +22,7 @@ const BookDetailsPage = async ({ params }: IBookPromis) => {
 
   const booksData = await getBookData();
 
-  const book = booksData.find((book) => book.bookId === Number(bookId));
-
+  const book = booksData.find((book: IBook) => book.bookId === Number(bookId));
   if (!book) {
     return (
       <div className="container mx-auto px-4 py-20 text-center">
@@ -139,13 +140,9 @@ const BookDetailsPage = async ({ params }: IBookPromis) => {
 
           {/* Action Buttons */}
           <div className="mt-3 flex flex-col gap-3 sm:flex-row">
-            <button className="btn min-h-12 flex-1 rounded-xl border border-gray-300 bg-white text-base text-gray-900 hover:bg-gray-100">
-              Read
-            </button>
+            <ReadButtun book={book} />
 
-            <button className="btn min-h-12 flex-1 rounded-xl border-0 bg-[#50b1c9] text-base text-white hover:bg-[#399bb3]">
-              Wishlist
-            </button>
+            <WishlistButtun book={book} />
           </div>
         </div>
       </div>
