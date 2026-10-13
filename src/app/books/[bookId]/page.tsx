@@ -7,8 +7,10 @@ interface IBookPromis {
   params: Promise<{ bookId: string }>;
 }
 
-const getBookData = async () => {
-  const res = await fetch("http://localhost:3000/booksData.json");
+const getBookData = async (): Promise<IBook[]> => {
+  const res = await fetch("http://localhost:3000/booksData.json", {
+    cache: "force-cache",
+  });
 
   if (!res.ok) {
     throw new Error("Failed to fetch books data");
@@ -17,12 +19,22 @@ const getBookData = async () => {
   return res.json();
 };
 
+// Generate static pages for all book IDs
+export async function generateStaticParams() {
+  const booksData = await getBookData();
+
+  return booksData.map((book) => ({
+    bookId: String(book.bookId),
+  }));
+}
+
 const BookDetailsPage = async ({ params }: IBookPromis) => {
   const { bookId } = await params;
 
   const booksData = await getBookData();
 
-  const book = booksData.find((book: IBook) => book.bookId === Number(bookId));
+  const book = booksData.find((item) => item.bookId === Number(bookId));
+
   if (!book) {
     return (
       <div className="container mx-auto px-4 py-20 text-center">
@@ -32,6 +44,7 @@ const BookDetailsPage = async ({ params }: IBookPromis) => {
   }
 
   const {
+    
     bookName,
     author,
     image,
@@ -52,7 +65,7 @@ const BookDetailsPage = async ({ params }: IBookPromis) => {
       </h2>
 
       {/* Main Card */}
-      <div className="grid grid-cols-1 gap-6 overflow-hidden rounded-2xl border border-gray-200 bg-base-100 p-4 shadow-sm sm:p-6 md:gap-8 lg:grid-cols-2 lg:gap-10 lg:p-10">
+      <div  className="grid grid-cols-1 gap-6 overflow-hidden rounded-2xl border border-gray-200 bg-base-100 p-4 shadow-sm sm:p-6 md:gap-8 lg:grid-cols-2 lg:gap-10 lg:p-10">
         {/* Book Image */}
         <div className="flex min-h-[280px] items-center justify-center rounded-2xl bg-[#f3f3f3] p-6 sm:min-h-[380px] sm:p-10 lg:min-h-[480px]">
           <Image
@@ -141,7 +154,6 @@ const BookDetailsPage = async ({ params }: IBookPromis) => {
           {/* Action Buttons */}
           <div className="mt-3 flex flex-col gap-3 sm:flex-row">
             <ReadButtun book={book} />
-
             <WishlistButtun book={book} />
           </div>
         </div>

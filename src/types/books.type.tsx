@@ -1,4 +1,4 @@
-export interface IBook  {
+export interface IBook {
   bookId: number;
   bookName: string;
   author: string;
@@ -10,4 +10,4 @@ export interface IBook  {
   tags: string[];
   publisher: string;
   yearOfPublishing: number;
-};
+}
