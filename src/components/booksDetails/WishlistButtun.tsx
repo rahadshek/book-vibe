@@ -6,12 +6,17 @@ import React, { useContext } from "react";
 import { toast } from "react-toastify";
 
 const WishlistButtun = ({ book }: { book: IBook }) => {
-  const booksProvider = useContext(BooksContext);
+  const { wishlist, setWishlist } = useContext(BooksContext);
 
-  const { wishlist, setWishlist } = booksProvider;
+  const isAlreadyAdded = wishlist.some(
+    (item: IBook) => item.bookId === book.bookId,
+  );
 
   const handlWishlistBook = () => {
-    console.log(" wishlist hit now ", book);
+    if (isAlreadyAdded) {
+      return;
+    }
+    // console.log(" wishlist hit now ", book);
     setWishlist([...wishlist, book]);
 
     toast.success(`you add a${book.bookName} book in your wishlist`);
@@ -19,10 +24,11 @@ const WishlistButtun = ({ book }: { book: IBook }) => {
 
   return (
     <button
-      className="btn min-h-12 flex-1 rounded-xl border-0 bg-[#50b1c9] text-base text-white hover:bg-[#399bb3]"
+       className="btn min-h-12 flex-1 rounded-xl border-0 bg-[#50b1c9] text-base text-white hover:bg-[#399bb3] cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
       onClick={() => handlWishlistBook()}
+      disabled={isAlreadyAdded}
     >
-      Wishlist
+      {isAlreadyAdded ? " Add to Wishlist" : "wishlist"}
     </button>
   );
 };

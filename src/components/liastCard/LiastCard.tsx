@@ -1,4 +1,3 @@
-import React from "react";
 import Image from "next/image";
 import { FaRegStar, FaMapMarkerAlt } from "react-icons/fa"; // অথবা প্রয়োজনীয় আইকন
 import { HiOutlineUsers, HiOutlineDocumentText } from "react-icons/hi2";
